@@ -1,0 +1,75 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Task {
+    private String description;
+    private boolean completed;
+
+    public Task(String description) {
+        this.description = description;
+        this.completed = false;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void markAsCompleted() {
+        this.completed = true;
+    }
+}
+
+public class TodoManager {
+    public static void main(String[] args) {
+        List<Task> tasks = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Todo Manager");
+            System.out.println("1. Add Task");
+            System.out.println("2. List Tasks");
+            System.out.println("3. Mark Task as Completed");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task description: ");
+                    String taskDescription = scanner.nextLine();
+                    tasks.add(new Task(taskDescription));
+                    System.out.println("Task added successfully!");
+                    break;
+                case 2:
+                    System.out.println("Tasks:");
+                    for (int i = 0; i < tasks.size(); i++) {
+                        Task task = tasks.get(i);
+                        System.out.println((i + 1) + ". " + task.getDescription() +
+                                (task.isCompleted() ? " (Completed)" : ""));
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter task number to mark as completed: ");
+                    int taskNumber = scanner.nextInt();
+                    if (taskNumber >= 1 && taskNumber <= tasks.size()) {
+                        tasks.get(taskNumber - 1).markAsCompleted();
+                        System.out.println("Task marked as completed!");
+                    } else {
+                        System.out.println("Invalid task number.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting Todo Manager. Have a great day!");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
